@@ -15,8 +15,8 @@ describe "Part 1" do
   end
 end
 
-# describe "Part 2" do
-#   it "should return the correct answer" do
-#     expect(dec_01(input = TEST_INPUT_01, window = 3)).to eq 5
-#   end
-# end
+describe "Part 2" do
+  it "should return the correct answer" do
+    expect(dec_02(input = TEST_INPUT_02, journey_class = JourneyV2)).to eq 900
+  end
+end
