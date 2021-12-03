@@ -26,6 +26,8 @@ class Journey
   def apply_moves(moves)
     moves_parsed = moves.map(&:split)
     moves_parsed.each do |move|
+      # the send method allows calling of other methods by string or symbol
+      # i.e. foo.bar(10) becomes foo.send("bar", 10)
       send(move[0], move[1])
     end
   end
