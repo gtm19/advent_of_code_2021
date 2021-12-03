@@ -3,7 +3,7 @@ The home of my code written to tackle 2021's Advent of Code (https://adventofcod
 
 ## Solutions
 
-These are written in Ruby (2.6.6), and live in the [lib](/lib) directory.
+These are written in Ruby (2.7.4), and live in the [lib](/lib) directory.
 
 ## Setup (for tests)
 

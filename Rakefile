@@ -28,4 +28,16 @@ task :dec_02 do
   puts "---------"
 end
 
+task :dec_03 do
+  input = File.readlines("inputs/dec_03.txt", chomp: true)
+  puts "Part 1:"
+  puts "---------"
+  dec_03(input)
+  puts "---------"
+  puts "Part 2:"
+  puts "---------"
+  # dec_02(input, journey_class = JourneyV2)
+  puts "---------"
+end
+
 task default: %w[spec]
