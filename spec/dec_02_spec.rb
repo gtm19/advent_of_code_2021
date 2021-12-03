@@ -9,13 +9,13 @@ TEST_INPUT_02 = [
   "forward 2"
 ]
 
-describe "Part 1" do
+describe "December 02: Part 1" do
   it "should return the correct answer" do
     expect(dec_02(input = TEST_INPUT_02)).to eq 150
   end
 end
 
-describe "Part 2" do
+describe "December 02: Part 2" do
   it "should return the correct answer" do
     expect(dec_02(input = TEST_INPUT_02, journey_class = JourneyV2)).to eq 900
   end

@@ -13,13 +13,13 @@ TEST_INPUT_01 = [
   263
 ]
 
-describe "Part 1" do
+describe "December 01: Part 1" do
   it "should return the correct answer" do
     expect(dec_01(input = TEST_INPUT_01)).to eq 7
   end
 end
 
-describe "Part 2" do
+describe "December 01: Part 2" do
   it "should return the correct answer" do
     expect(dec_01(input = TEST_INPUT_01, window = 3)).to eq 5
   end
