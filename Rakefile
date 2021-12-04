@@ -2,7 +2,13 @@ require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
 # Require all files from lib directory
-Dir[File.join(__dir__, 'lib', '*.rb')].each { |file| require file }
+Dir[File.join(__dir__, 'lib', '*.rb')].sort.each { |file| require file }
+
+# rubocop
+desc "Look for style guide offenses in your code"
+task :rubocop do
+  sh "rubocop --format simple || true"
+end
 
 task :dec_01 do
   input = File.readlines("inputs/dec_01.txt", chomp: true).map(&:to_i)
@@ -40,4 +46,4 @@ task :dec_03 do
   puts "---------"
 end
 
-task default: %w[spec]
+task default: %w[rubocop spec]
