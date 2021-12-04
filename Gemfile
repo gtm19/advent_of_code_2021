@@ -10,3 +10,7 @@ group :test do
   gem "rspec"
   gem "pry-byebug"
 end
+
+group :development do
+  gem 'rubocop', '~> 1.23', require: false
+end
