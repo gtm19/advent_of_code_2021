@@ -46,4 +46,16 @@ task :dec_03 do
   puts "---------"
 end
 
+task :dec_04 do
+  input = File.readlines("inputs/dec_04.txt", chomp: true)
+  puts "Part 1:"
+  puts "---------"
+  dec_04(input, part = 1)
+  puts "---------"
+  puts "Part 2:"
+  puts "---------"
+  dec_04(input, part = 2)
+  puts "---------"
+end
+
 task default: %w[rubocop spec]
