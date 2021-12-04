@@ -29,14 +29,14 @@ task :dec_02 do
 end
 
 task :dec_03 do
-  input = File.readlines("inputs/dec_03.txt", chomp: true)
+  input = File.readlines("inputs/dec_03.txt", chomp: true).filter { |item| item.length > 1}
   puts "Part 1:"
   puts "---------"
   dec_03(input)
   puts "---------"
   puts "Part 2:"
   puts "---------"
-  # dec_02(input, journey_class = JourneyV2)
+  dec_03(input, part = 2)
   puts "---------"
 end
 

@@ -17,12 +17,12 @@ TEST_INPUT_03 = [
 
 describe "December 03: Part 1" do
   it "should return the correct answer" do
-    expect(dec_03(input = TEST_INPUT_03)).to eq 198
+    expect(dec_03(input = TEST_INPUT_03, part = 1)).to eq 198
   end
 end
 
-# describe "Part 2" do
-#   it "should return the correct answer" do
-#     expect(dec_03(input = TEST_INPUT_03)).to eq nil
-#   end
-# end
+describe "December 03: Part 2" do
+  it "should return the correct answer" do
+    expect(dec_03(input = TEST_INPUT_03, part = 2)).to eq 230
+  end
+end
