@@ -10,6 +10,15 @@ task :rubocop do
   sh "rubocop --format simple || true"
 end
 
+# create irb with lib loaded
+desc "Create an interactive console with all lib files loaded"
+task :console do
+  files = Dir[File.join(__dir__, 'lib', '*.rb')].sort
+  require_command = files.map { |file| '-r ' + file }.join(" ")
+  sh "irb -f #{require_command}"
+end
+
+
 task :dec_01 do
   input = File.readlines("inputs/dec_01.txt", chomp: true).map(&:to_i)
   puts "Part 1:"
@@ -47,14 +56,14 @@ task :dec_03 do
 end
 
 task :dec_04 do
-  input = File.join("inputs", "dec_04.txt")
+  input = File.join(__dir__, "inputs", "dec_04.txt")
   puts "Part 1:"
   puts "---------"
   dec_04(input, part = 1)
   puts "---------"
   puts "Part 2:"
   puts "---------"
-  # dec_04(input, part = 2)
+  dec_04(input, part = 2)
   puts "---------"
 end
 

@@ -8,8 +8,8 @@ describe "December 04: Part 1" do
   end
 end
 
-# describe "December 04: Part 2" do
-#   it "should return the correct answer" do
-#     expect(dec_04(input = TEST_INPUT_03, part = 2)).to eq 230
-#   end
-# end
+describe "December 04: Part 2" do
+  it "should return the correct answer" do
+    expect(dec_04(input = TEST_INPUT_04, part = 2)).to eq 1924
+  end
+end
