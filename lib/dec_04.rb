@@ -1,5 +1,3 @@
-require "pry-byebug"
-
 def dec_04(input, part)
   if part == 1
     dec_04_part_01(input)
