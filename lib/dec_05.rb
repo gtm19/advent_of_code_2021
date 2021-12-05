@@ -42,9 +42,7 @@ def parse_floor(input)
 end
 
 def interpolate_coords(coords)
-  # x = Range.new(*coords.map { |arr| arr[0] }.sort).to_a
   x = create_seq(coords[0][0], coords[1][0])
-  # y = Range.new(*coords.map { |arr| arr[1] }.sort).to_a # TODO: needs to not be sorted for diagonals
   y = create_seq(coords[0][1], coords[1][1])
   if x.length == y.length
     return x.zip(y)
