@@ -79,4 +79,16 @@ task :dec_05 do
   puts "---------"
 end
 
+task :dec_06 do
+  input = File.join(__dir__, "inputs", "dec_06.txt")
+  puts "Part 1:"
+  puts "---------"
+  dec_06(input, part = 1)
+  puts "---------"
+  puts "Part 2:"
+  puts "---------"
+  # dec_05(input, part = 2)
+  puts "---------"
+end
+
 task default: %w[rubocop spec]
