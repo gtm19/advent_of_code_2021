@@ -87,7 +87,7 @@ task :dec_06 do
   puts "---------"
   puts "Part 2:"
   puts "---------"
-  # dec_05(input, part = 2)
+  dec_06(input, part = 2)
   puts "---------"
 end
 
