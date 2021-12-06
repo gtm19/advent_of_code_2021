@@ -9,15 +9,19 @@ def dec_06(input, part = 1)
 end
 
 def dec_06_part_01(input, days = 80)
-  fish_population = FishPopulation.new(input: input)
+  fish_population = SimpleFishPopulation.new(input: input)
   days.times{ fish_population.age }
   count = fish_population.count
   puts "After #{days} day(s) there are #{count} laternfish"
   return count
 end
 
-def dec_06_part_02(input)
-  dec_06_part_01(input = input, days = 256) # TODO: This takes forever as needs lots of memory!
+def dec_06_part_02(input, days = 256)
+  fish_population = SimpleFishPopulation.new(input: input)
+  days.times{ fish_population.age }
+  count = fish_population.count
+  puts "After #{days} day(s) there are #{count} laternfish"
+  return count
 end
 
 class Fish
@@ -57,5 +61,28 @@ class FishPopulation
 
   def count
     @fish.length
+  end
+end
+
+class SimpleFishPopulation
+  def initialize(args = {})
+    parse_input(args[:input])
+  end
+
+  def parse_input(input)
+    ages = File.readlines(input, chomp: true).first.split(/\D/).map(&:to_i)
+    @counts = Array.new(9) { 0 }
+    ages.each { |age| @counts[age] += 1 }
+  end
+
+  def age
+    new_fish = @counts[0]
+    @counts[0..7] = @counts[1..8]
+    @counts[6] += new_fish
+    @counts[8] = new_fish
+  end
+
+  def count
+    @counts.sum
   end
 end
