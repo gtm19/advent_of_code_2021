@@ -1,6 +1,8 @@
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
+task default: %w[rubocop spec]
+
 # Require all files from lib directory
 Dir[File.join(__dir__, 'lib', '*.rb')].sort.each { |file| require file }
 
@@ -21,8 +23,53 @@ end
 # Initialise new files
 task :init, [:stub] do |_t, args|
   stub = args.stub
+  stub_num = stub.match(/\d+/).to_s
   puts "Initialising #{stub} files"
   sh "touch inputs/#{stub}.txt inputs/test/test_#{stub}.txt"
+
+  # Spec file
+  spec_file = File.join("spec", "#{stub}_spec.rb")
+  spec_text = <<~EOF
+    require "#{stub}"
+
+    TEST_INPUT_#{stub_num} = File.join("inputs", "test", "test_#{stub}.txt")
+
+    describe "December #{stub_num}: Part 1" do
+      it "should return the correct answer" do
+        expect(#{stub}(input = TEST_INPUT_#{stub_num}, part = 1)).to eq 111
+      end
+    end
+
+    describe "December #{stub_num}: Part 2" do
+      it "should return the correct answer" do
+        expect(#{stub}(input = TEST_INPUT_#{stub_num}, part = 2)).to eq 222
+      end
+    end
+  EOF
+  File.write(spec_file, spec_text)
+
+  # Lib file
+  lib_file = File.join("lib", "#{stub}.rb")
+  lib_text = <<~EOF
+    def #{stub}(input, part = 1)
+      if part == 1
+        #{stub}_part_01(input)
+      elsif part == 2
+        #{stub}_part_02(input)
+      else
+        raise ArgumentError.new "Part must be 1 or 2"
+      end
+    end
+
+    def #{stub}_part_01(input)
+
+    end
+
+    def #{stub}_part_02(input)
+
+    end
+  EOF
+  File.write(lib_file, lib_text)
 end
 
 
@@ -109,5 +156,3 @@ task :dec_07 do
   dec_07(input, part = 2)
   puts "---------"
 end
-
-task default: %w[rubocop spec]
