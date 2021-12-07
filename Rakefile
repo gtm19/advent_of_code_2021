@@ -18,6 +18,13 @@ task :console do
   sh "irb -f #{require_command}"
 end
 
+# Initialise new files
+task :init, [:stub] do |_t, args|
+  stub = args.stub
+  puts "Initialising #{stub} files"
+  sh "touch inputs/#{stub}.txt inputs/test/test_#{stub}.txt"
+end
+
 
 task :dec_01 do
   input = File.readlines("inputs/dec_01.txt", chomp: true).map(&:to_i)
