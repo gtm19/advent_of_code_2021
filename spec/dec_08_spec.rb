@@ -10,6 +10,6 @@ end
 
 describe "December 08: Part 2" do
   it "should return the correct answer" do
-    expect(dec_08(input = TEST_INPUT_08, part = 2)).to eq "REPLACE_ME"
+    expect(dec_08(input = TEST_INPUT_08, part = 2)).to eq 61229
   end
 end
