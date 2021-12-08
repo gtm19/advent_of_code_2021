@@ -36,13 +36,13 @@ task :init, [:stub] do |_t, args|
 
     describe "December #{stub_num}: Part 1" do
       it "should return the correct answer" do
-        expect(#{stub}(input = TEST_INPUT_#{stub_num}, part = 1)).to eq 111
+        expect(#{stub}(input = TEST_INPUT_#{stub_num}, part = 1)).to eq "REPLACE_ME"
       end
     end
 
     describe "December #{stub_num}: Part 2" do
       it "should return the correct answer" do
-        expect(#{stub}(input = TEST_INPUT_#{stub_num}, part = 2)).to eq 222
+        expect(#{stub}(input = TEST_INPUT_#{stub_num}, part = 2)).to eq "REPLACE_ME"
       end
     end
   EOF
