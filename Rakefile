@@ -72,87 +72,50 @@ task :init, [:stub] do |_t, args|
   File.write(lib_file, lib_text)
 end
 
-
-task :dec_01 do
-  input = File.readlines("inputs/dec_01.txt", chomp: true).map(&:to_i)
+def run(task)
+  input = yield
   puts "Part 1:"
   puts "---------"
-  dec_01(input)
+  send(task, input, part = 1)
   puts "---------"
   puts "Part 2:"
   puts "---------"
-  dec_01(input, window = 3)
+  send(task, input, part = 2)
   puts "---------"
 end
 
-task :dec_02 do
-  input = File.readlines("inputs/dec_02.txt", chomp: true)
-  puts "Part 1:"
-  puts "---------"
-  dec_02(input)
-  puts "---------"
-  puts "Part 2:"
-  puts "---------"
-  dec_02(input, journey_class = JourneyV2)
-  puts "---------"
+task :dec_01 do |task|
+  run(task.name) { File.readlines("inputs/#{task.name}.txt", chomp: true).map(&:to_i) }
 end
 
-task :dec_03 do
-  input = File.readlines("inputs/dec_03.txt", chomp: true).filter { |item| item.length > 1}
-  puts "Part 1:"
-  puts "---------"
-  dec_03(input)
-  puts "---------"
-  puts "Part 2:"
-  puts "---------"
-  dec_03(input, part = 2)
-  puts "---------"
+task :dec_02 do |task|
+  run(task.name) { File.readlines("inputs/#{task.name}.txt", chomp: true) }
 end
 
-task :dec_04 do
-  input = File.join(__dir__, "inputs", "dec_04.txt")
-  puts "Part 1:"
-  puts "---------"
-  dec_04(input, part = 1)
-  puts "---------"
-  puts "Part 2:"
-  puts "---------"
-  dec_04(input, part = 2)
-  puts "---------"
+task :dec_03 do |task|
+  run(task.name) { File.readlines("inputs/#{task.name}.txt", chomp: true).filter { |item| item.length > 1} }
 end
 
-task :dec_05 do
-  input = File.join(__dir__, "inputs", "dec_05.txt")
-  puts "Part 1:"
-  puts "---------"
-  dec_05(input, part = 1)
-  puts "---------"
-  puts "Part 2:"
-  puts "---------"
-  dec_05(input, part = 2)
-  puts "---------"
+task :dec_04 do |task|
+  run(task.name) { File.join(__dir__, "inputs", "#{task.name}.txt") }
 end
 
-task :dec_06 do
-  input = File.join(__dir__, "inputs", "dec_06.txt")
-  puts "Part 1:"
-  puts "---------"
-  dec_06(input, part = 1)
-  puts "---------"
-  puts "Part 2:"
-  puts "---------"
-  dec_06(input, part = 2)
-  puts "---------"
+task :dec_05 do |task|
+  run(task.name) { File.join(__dir__, "inputs", "#{task.name}.txt") }
 end
 
-task :dec_07 do
-  input = File.join(__dir__, "inputs", "dec_07.txt")
-  puts "Part 1:"
-  puts "---------"
-  dec_07(input, part = 1)
-  puts "---------"
-  puts "Part 2:"
-  puts "---------"
-  dec_07(input, part = 2)
-  puts "---------"
+task :dec_06 do |task|
+  run(task.name) { File.join(__dir__, "inputs", "#{task.name}.txt") }
+end
+
+task :dec_07 do |task|
+  run(task.name) { File.join(__dir__, "inputs", "#{task.name}.txt") }
+end
+
+task :dec_08 do |task|
+  run(task.name) { File.join(__dir__, "inputs", "#{task.name}.txt") }
+end
+
+task :lab do |t|
+  p t.name
 end
