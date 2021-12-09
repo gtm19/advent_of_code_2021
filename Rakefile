@@ -116,6 +116,10 @@ task :dec_08 do |task|
   run(task.name) { File.join(__dir__, "inputs", "#{task.name}.txt") }
 end
 
+task :dec_09 do |task|
+  run(task.name) { File.join(__dir__, "inputs", "#{task.name}.txt") }
+end
+
 task :lab do |t|
   p t.name
 end
