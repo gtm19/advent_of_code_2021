@@ -96,30 +96,18 @@ task :dec_03 do |task|
   run(task.name) { File.readlines("inputs/#{task.name}.txt", chomp: true).filter { |item| item.length > 1} }
 end
 
-task :dec_04 do |task|
-  run(task.name) { File.join(__dir__, "inputs", "#{task.name}.txt") }
-end
+more_tasks = [
+  :dec_04,
+  :dec_05,
+  :dec_06,
+  :dec_07,
+  :dec_08,
+  :dec_09,
+  :dec_10
+]
 
-task :dec_05 do |task|
-  run(task.name) { File.join(__dir__, "inputs", "#{task.name}.txt") }
-end
-
-task :dec_06 do |task|
-  run(task.name) { File.join(__dir__, "inputs", "#{task.name}.txt") }
-end
-
-task :dec_07 do |task|
-  run(task.name) { File.join(__dir__, "inputs", "#{task.name}.txt") }
-end
-
-task :dec_08 do |task|
-  run(task.name) { File.join(__dir__, "inputs", "#{task.name}.txt") }
-end
-
-task :dec_09 do |task|
-  run(task.name) { File.join(__dir__, "inputs", "#{task.name}.txt") }
-end
-
-task :lab do |t|
-  p t.name
+more_tasks.each do |tsk|
+  task tsk do |task|
+    run(task.name) { File.join(__dir__, "inputs", "#{task.name}.txt") }
+  end
 end
