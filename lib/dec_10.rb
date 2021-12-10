@@ -87,7 +87,7 @@ class Navigation
       end
     end
 
-    if output[:valid].nil?
+    unless output[:status]
       output[:valid] = false
       output[:status] = "incomplete"
       output[:complete_with] = expected_closers.reverse.join
