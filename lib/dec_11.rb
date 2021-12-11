@@ -17,16 +17,20 @@ def dec_11_part_01(input)
 end
 
 def dec_11_part_02(input)
-
+  octo = Octopi.new(input: input)
+  octo.synchronise
+  puts "After #{octo.steps} steps, all octopi are synchronised"
+  return octo.steps
 end
 
 class Octopi
-  attr_reader :positions, :flashes
+  attr_reader :positions, :flashes, :steps
 
   def initialize(**args)
     @input = args[:input] || File.join("inputs", "test", "test_dec_11.txt")
     parse_input
     @flashes = 0
+    @steps = 0
   end
 
   def step
@@ -50,7 +54,7 @@ class Octopi
         new_flashers << {row: point[:row], col: point[:col]} if item == 10
       end
     end
-    
+
     # increase number of flashes
     @flashes += new_flashers.length
 
@@ -58,8 +62,23 @@ class Octopi
     new_flashers.each do |point|
       @positions[point[:row]][point[:col]] = 0
     end
-  end
 
+    # add 1 to steps
+    @steps += 1
+
+    return true
+  end
+  
+  def synchronise
+    synchronised = false
+    until synchronised
+      step
+      synchronised = all_zero?
+    end
+  end
+  
+  private
+  
   def get_adj(pos, max = 10)
     adj_points = [
       [-1, -1],
@@ -82,11 +101,15 @@ class Octopi
     adj_points.compact
   end
 
-  private
-
   def parse_input
     @positions = File.readlines(@input, chomp: true).map do |row|
       row.split(//).map(&:to_i)
+    end
+  end
+
+  def all_zero?
+    @positions.all? do |row|
+      row.all?(&:zero?)
     end
   end
 end
