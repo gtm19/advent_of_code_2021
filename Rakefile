@@ -103,7 +103,8 @@ more_tasks = [
   :dec_07,
   :dec_08,
   :dec_09,
-  :dec_10
+  :dec_10,
+  :dec_11
 ]
 
 more_tasks.each do |tsk|
