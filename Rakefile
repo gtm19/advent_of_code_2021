@@ -72,6 +72,8 @@ task :init, [:stub] do |_t, args|
   File.write(lib_file, lib_text)
 end
 
+# Main challenge tasks
+
 def run(task)
   input = yield
   puts "Part 1:"
@@ -96,19 +98,6 @@ task :dec_03 do |task|
   run(task.name) { File.readlines("inputs/#{task.name}.txt", chomp: true).filter { |item| item.length > 1} }
 end
 
-more_tasks = [
-  :dec_04,
-  :dec_05,
-  :dec_06,
-  :dec_07,
-  :dec_08,
-  :dec_09,
-  :dec_10,
-  :dec_11
-]
-
-more_tasks.each do |tsk|
-  task tsk do |task|
-    run(task.name) { File.join(__dir__, "inputs", "#{task.name}.txt") }
-  end
+rule /^dec_\d{2}$/ do |task|
+  run(task.name) { File.join(__dir__, "inputs", "#{task.name}.txt") }
 end
