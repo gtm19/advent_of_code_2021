@@ -98,6 +98,10 @@ task :dec_03 do |task|
   run(task.name) { File.readlines("inputs/#{task.name}.txt", chomp: true).filter { |item| item.length > 1} }
 end
 
+task :dec_12 do |task|
+  run(task.name) { File.join(__dir__, "inputs", "#{task.name}.txt") }
+end
+
 rule /^dec_\d{2}$/ do |task|
   run(task.name) { File.join(__dir__, "inputs", "#{task.name}.txt") }
 end

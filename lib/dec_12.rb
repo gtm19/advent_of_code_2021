@@ -11,64 +11,23 @@ def dec_12(input, part = 1)
 end
 
 def dec_12_part_01(input)
-
+  cave_network = CaveNetwork.new(input: input)
+  cave_network.trace_routes
+  routes_n = cave_network.routes.length
+  puts "There are #{routes_n} valid route(s) through the caves"
+  return routes_n
 end
 
 def dec_12_part_02(input)
-
-end
-
-class Cave
-  attr_reader :name
-  attr_accessor :adjacents, :visits
-
-  def initialize(**args)
-    @name = args[:name] || ArgumentError.new("oops")
-    @visits = 0
-    @adjacents = []
+  cave_network = CaveNetwork.new(input: input)
+  # need to trace routes once for each "special" cave
+  # i.e. everything other than :start and :end
+  cave_network.caves.keys.reject { |k| [:start, :end].include?(k) }.each do |node|
+    cave_network.trace_routes(:start, :end, node)
   end
-
-  def add_adjacent(cave)
-    unless @adjacents.include?(cave) # && cave.adjacents.include?(self)
-      @adjacents << cave
-      # cave.add_adjacent(self)
-    end
-  end
-
-  def small?
-    @name == @name.downcase
-  end
-
-  def big?
-    !self.small?
-  end
-
-  def start?
-    @name == "start"
-  end
-
-  def end?
-    @name == "end"
-  end
-
-  def to_s
-    @name
-  end
-
-  def useful?
-    # is the cave:
-    # the end?
-    self.end? ||
-    # OR big?
-    self.big? ||
-    # OR small AND not already visited AND adjacent to the end or a big cave
-    self.small? && self.visits == 0 && self.adjacents.any? { |adj| adj.big? || adj.end? }  
-  end
-
-  def viable_adjacents
-    return [] if end?
-    @adjacents.select { |adjacent| adjacent.useful? }
-  end
+  routes_n = cave_network.routes.uniq.length
+  puts "There are #{routes_n} valid route(s) through the caves"
+  return routes_n
 end
 
 class CaveNetwork
@@ -77,58 +36,32 @@ class CaveNetwork
 
   def initialize(**args)
     @input = args[:input] || File.join("inputs", "test", "test_dec_12.txt")
-    @caves = []
+    @caves = {}
+    @routes = []
     initialize_caves
-    trace_routes
   end
 
-  def add_cave(name)
-    if cave_names.include? name
-      find_cave(name)
-    else
-      cave = Cave.new(name: name)
-      @caves << cave
-      cave
-    end
-  end
-
-  def find_cave(name)
-    @caves.select { |v| v.name == name }.first
-  end
-
-  def start
-    find_cave("start")
-  end
-
-  def link_caves(name1, name2)
-    find_cave(name1).add_adjacent(find_cave(name2))
-  end
-
-  def cave_names
-    @caves.map(&:name)
-  end
-
-  def trace_routes
-    full_routes = [[start]]
-    complete = false
-    until complete do
-      full_routes.each do |route|
-        last_cave = route.last
-        unless last_cave.end?
-          opts = last_cave.viable_adjacents
-          new_routes = []
-          opts.each do |opt|
-            opt.visits += 1
-            new_routes << route + [opt]
-          end
-          route = new_routes
-        end
+  # I have no shame in confessing that I initially created a very complicated
+  # potential solution which was very difficult to work through, so I found
+  # the following example, which was very instructive
+  # https://gist.github.com/kaine119/8bec5cbe2d97868da16a84744e5b7e38
+  def trace_routes(current = :start, last = :end, special = nil, visited = [])
+    # if current cave is the targeted last cave, then add it to visited
+    # and we have ourselves a complete route. Add it to @routes and 
+    # return so that the method exits
+    return @routes << visited + [last] if current == last
+    # if we don't exit above...
+    # for each cave linked to our current cave
+    @caves[current].each do |cave|
+      # skip if we've already visited or it's a small cave
+      if visited.include?(cave) && cave.downcase == cave
+        # UNLESS it's our special cave which we are visiting for a second time
+        next unless cave == special && visited.count(cave) == 1
       end
-      binding.pry
-      full_routes.flatten!
-      complete = full_routes.all? { |r| r.end? }
+      # trace routes, this time from the current cave, adding the same
+      # to our visited caves
+      trace_routes(cave, last, special = special, visited + [current])
     end
-    @routes = full_routes
   end
 
   private
@@ -136,9 +69,15 @@ class CaveNetwork
   def initialize_caves
     if @input
       File.readlines(@input, chomp: true).each do |link|
-        caves = link.split("-").map{ |name| add_cave(name) }
-        caves[0].add_adjacent caves[1]
-        caves[1].add_adjacent caves[0]
+        # new caves looks like [:one, :two]
+        new_caves = link.split("-").map(&:to_sym)
+        # initialise @caves[:one] = [] unless it already exists
+        @caves[new_caves[0]] ||= []
+        # add [:two] to @caves[:one]
+        @caves[new_caves[0]] << new_caves[1]
+        # AND VICE VERSA
+        @caves[new_caves[1]] ||= []
+        @caves[new_caves[1]] << new_caves[0]
       end
     end
   end
