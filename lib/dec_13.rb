@@ -9,11 +9,17 @@ def dec_13(input, part = 1)
 end
 
 def dec_13_part_01(input)
-
+  paper = FoldingPaper.new(input: input)
+  paper.fold
+  n_dots = paper.dots.length
+  puts "There are #{n_dots} after 1 fold"
+  return n_dots
 end
 
 def dec_13_part_02(input)
-
+  paper = FoldingPaper.new(input: input)
+  paper.folds.length.times { paper.fold }
+  puts paper
 end
 
 class FoldingPaper
@@ -22,6 +28,29 @@ class FoldingPaper
   def initialize(**args)
     @input = args[:input] || File.join("inputs", "test", "test_dec_13.txt")
     parse_input
+  end
+
+  def fold
+    fold = @folds.shift
+    crease = fold.values.first
+    index = fold[:x] ? 0 : 1
+    @dots.each do |dot|
+      dot[index] = 2 * crease - dot[index] if dot[index] > crease
+    end
+    @dots.uniq!
+  end
+
+  def to_s
+    rows = @dots.map { |dot| dot[0] }.max + 1
+    cols = @dots.map { |dot| dot[1] }.max + 1
+
+    array = Array.new(rows) { Array.new(cols) {" "} }
+
+    @dots.each do |dot|
+      array[dot[0]][dot[1]] = "▉"
+    end
+
+    array.transpose.map(&:join).join("\n")
   end
 
   private
